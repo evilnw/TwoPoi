@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TwoPoi.MainPage"
+             x:Name="MainPageContent">
+
+    <ScrollView>
+        <StackLayout BackgroundColor="#F0EFEB">
+            <StackLayout BackgroundColor="#F0EFEB">
+                <Grid Padding="5" RowSpacing="0" ColumnSpacing="0" Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Text="{Binding CurrentLatitude}" FontSize="Medium" TextColor="#424b54" Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3"/>
+                    <Label Text="{Binding CurrentLongitude}" FontSize="Medium" TextColor="#424b54" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="3"/>
+                    <Button ImageSource="AddButton" 
+                        Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
+                        Command="{Binding CreateTravelWidgetCommand}">
+                        <Button.Triggers>
+                            <DataTrigger TargetType="Button" Binding="{Binding Status}" Value="Ready" >
+                                <Setter Property="ImageSource" Value="AddButton" />
+                                <Setter Property="IsEnabled" Value="True" />
+                            </DataTrigger>
+                            <DataTrigger TargetType="Button" Binding="{Binding Status}" Value="Error" >
+                                <Setter Property="ImageSource" Value="LocationOff" />
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger TargetType="Button" Binding="{Binding Status}" Value="TravelCreation" >
+                                <Setter Property="ImageSource" Value="Location" />
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                            <DataTrigger TargetType="Button" Binding="{Binding Status}" Value="ConnectionProblem" >
+                                <Setter Property="ImageSource" Value="Location" />
+                                <Setter Property="IsEnabled" Value="False" />
+                            </DataTrigger>
+                        </Button.Triggers>
+                    </Button>
+                </Grid>
+                <CollectionView ItemsSource="{Binding TravelWidgetsCollection}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Padding="5" RowSpacing="0" ColumnSpacing="0" Margin="10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Label Text="{Binding Distance}" TextColor="{Binding TextColor}"
+                                       BackgroundColor="{Binding DistanceBackgroundColor}" 
+                                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Title"
+                                       Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
+                                <Label Text="{Binding Name}" TextColor="{Binding TextColor}"
+                                       BackgroundColor="{Binding BackgroundColor}" 
+                                       HorizontalTextAlignment="Center" FontSize="Title" VerticalTextAlignment="Center"
+                                       Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"/>
+                                <Label Text="{Binding Latitude}" TextColor="{Binding TextColor}"
+                                       BackgroundColor="{Binding BackgroundColor}" 
+                                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Small" 
+                                       Grid.Column="1" Grid.Row="1"/>
+                                <Label Text="{Binding Longitude}" TextColor="{Binding TextColor}"
+                                       BackgroundColor="{Binding BackgroundColor}" 
+                                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Small" 
+                                       Grid.Column="2" Grid.Row="1"/>
+                                <Button Text="  "
+                                        BackgroundColor="{Binding DistanceBackgroundColor}"
+                                        Command="{Binding Path=BindingContext.OpenTravelWidgetSettingsCommand, Source={x:Reference MainPageContent}}"
+                                        CommandParameter="{Binding .}"
+                                        Grid.Column="3" Grid.Row="0" Grid.RowSpan="2"/>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+
+</ContentPage>

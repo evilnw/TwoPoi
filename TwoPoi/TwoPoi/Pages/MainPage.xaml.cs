@@ -1,0 +1,14 @@
+﻿
+using Xamarin.Forms;
+
+namespace TwoPoi
+{
+    public partial class MainPage : ContentPage
+    {
+        public MainPage()
+        {
+            InitializeComponent();
+            BindingContext = new MainPageViewModel();
+        }
+    }
+}
