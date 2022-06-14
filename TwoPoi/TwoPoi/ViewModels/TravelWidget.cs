@@ -44,7 +44,7 @@ namespace TwoPoi
 
         public Color BackgroundColor => Color.FromHex(TravelStyle.BackgroundHexColor);
 
-        public Color DistanceBackgroundColor => Color.FromHex(TravelStyle.BackgroundHexColor);
+        public Color SettingsButtonColor => Color.FromHex(TravelStyle.SettingsButtonHexColor);
 
         public TravelWidget(
             PointOfInterest pointOfInterest, 

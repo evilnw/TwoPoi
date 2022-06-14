@@ -10,21 +10,21 @@ using Xamarin.Forms.Xaml;
 namespace TwoPoi
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class TravelWidgetPage : ContentPage
+    public partial class TravelWidgetSettingsPage : ContentPage
     {
-        private TravelWidget _travelWidget;
+        private TravelWidgetSettings _travelWidgetSettings;
         
-        public TravelWidgetPage(TravelWidget travelWidget)
+        public TravelWidgetSettingsPage(TravelWidgetSettings travelWidgetSettings)
         {
             InitializeComponent();
-            _travelWidget = travelWidget;
-            BindingContext = _travelWidget;
+            _travelWidgetSettings = travelWidgetSettings;
+            BindingContext = _travelWidgetSettings;
         }
 
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            _travelWidget.Dispose();
+            //_travelWidget.Dispose();
         }
     }
 }

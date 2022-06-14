@@ -12,7 +12,7 @@ namespace TwoPoi
             var mainPage = new MainPage();
             NavigationPage.SetHasNavigationBar(mainPage, false);
             NavigationPage.SetHasBackButton(mainPage, false);
-            MainPage = mainPage;
+            MainPage = new NavigationPage(mainPage);
         }
 
         protected override async void OnStart()

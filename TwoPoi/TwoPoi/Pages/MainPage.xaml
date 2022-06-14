@@ -18,8 +18,8 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Label Text="{Binding CurrentLatitude}" FontSize="Medium" TextColor="#424b54" Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3"/>
-                    <Label Text="{Binding CurrentLongitude}" FontSize="Medium" TextColor="#424b54" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="3"/>
+                    <Label Text="{Binding CurrentPosition.Latitude}" FontSize="Medium" TextColor="#424b54" Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3"/>
+                    <Label Text="{Binding CurrentPosition.Longitude}" FontSize="Medium" TextColor="#424b54" Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="3"/>
                     <Button ImageSource="AddButton" 
                         Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"
                         Command="{Binding CreateTravelWidgetCommand}">
@@ -57,24 +57,16 @@
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <Label Text="{Binding Distance}" TextColor="{Binding TextColor}"
-                                       BackgroundColor="{Binding DistanceBackgroundColor}" 
-                                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Title"
-                                       Grid.Column="0" Grid.Row="0" Grid.RowSpan="2"/>
                                 <Label Text="{Binding Name}" TextColor="{Binding TextColor}"
                                        BackgroundColor="{Binding BackgroundColor}" 
                                        HorizontalTextAlignment="Center" FontSize="Title" VerticalTextAlignment="Center"
-                                       Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="2"/>
-                                <Label Text="{Binding Latitude}" TextColor="{Binding TextColor}"
+                                       Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3"/>
+                                <Label Text="{Binding Distance}" TextColor="{Binding TextColor}"
                                        BackgroundColor="{Binding BackgroundColor}" 
-                                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Small" 
-                                       Grid.Column="1" Grid.Row="1"/>
-                                <Label Text="{Binding Longitude}" TextColor="{Binding TextColor}"
-                                       BackgroundColor="{Binding BackgroundColor}" 
-                                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Small" 
-                                       Grid.Column="2" Grid.Row="1"/>
+                                       HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Title" 
+                                       Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3"/>
                                 <Button Text="  "
-                                        BackgroundColor="{Binding DistanceBackgroundColor}"
+                                        BackgroundColor="{Binding SettingsButtonColor}"
                                         Command="{Binding Path=BindingContext.OpenTravelWidgetSettingsCommand, Source={x:Reference MainPageContent}}"
                                         CommandParameter="{Binding .}"
                                         Grid.Column="3" Grid.Row="0" Grid.RowSpan="2"/>

@@ -14,7 +14,7 @@ namespace TwoPoi
         
         public string BackgroundHexColor { get; set; }
         
-        public string DistanceBackgroundHexColor { get; set; }
+        public string SettingsButtonHexColor { get; set; }
 
         public TravelStyle()
         {
@@ -24,12 +24,12 @@ namespace TwoPoi
             PointOfInterest pointOfInterest, 
             string textHexColor, 
             string backgroundHexColor, 
-            string distanceBackgroundHexColor)
+            string settingsButtonHexColor)
         {
             PointOfInterest = pointOfInterest;
             TextHexColor = textHexColor;
             BackgroundHexColor = backgroundHexColor;
-            DistanceBackgroundHexColor = distanceBackgroundHexColor;
+            SettingsButtonHexColor = settingsButtonHexColor;
         }
     }
 }
