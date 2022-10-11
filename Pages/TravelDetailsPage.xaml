@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:TwoPoi"
+             x:Class="TwoPoi.TravelDetailsPage">
+
+    <ContentPage.Resources>
+        <local:CoordinatesConverter x:Key="CoordinatesToStringConverter"/>
+    </ContentPage.Resources>
+
+    <ScrollView Margin="4">
+     
+        <!-- Name and Name Editor -->
+        <StackLayout>
+            <!-- Name -->
+            <Border BackgroundColor="{Binding Color}">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Entry x:Name="NameEntry" Grid.Column="0" Grid.Row="0" HorizontalOptions="StartAndExpand" IsReadOnly="True"
+                            Text="{Binding Name}" MaxLength="13" FontSize="Title" Placeholder="                 "/>
+
+                    <ImageButton Grid.Column="1" Grid.Row="0" Margin="10"
+                            HorizontalOptions="End" VerticalOptions="Center"  
+                            BackgroundColor="{Binding Color}"
+                            Command="{Binding RenameCommand}" CommandParameter="{x:Reference NameEntry}">
+                        <ImageButton.Triggers>
+                            <DataTrigger TargetType="ImageButton" Binding="{Binding Source={x:Reference NameEntry}, Path=IsReadOnly}" Value="True">
+                                <Setter Property="Source" Value="rename_icon.svg"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="ImageButton" Binding="{Binding Source={x:Reference NameEntry}, Path=IsReadOnly}" Value="False">
+                                <Setter Property="Source" Value="accept_icon.svg"/>
+                            </DataTrigger>
+                        </ImageButton.Triggers>
+                        
+                    </ImageButton>
+                </Grid>
+            </Border>
+            
+            <!-- Distance -->
+            <Border BackgroundColor="{Binding Color}" >
+                <Label Margin="10" Text="{Binding TravelNagiationViewModel.Distance}" FontSize="Title" VerticalOptions="Center"/>
+            </Border>
+
+            <!-- Coordinates -->
+            <Border BackgroundColor="{Binding Color}">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Label Grid.Column="0" Grid.Row="0" Margin="0" FontSize="Medium"
+                            Text="{Binding TravelNagiationViewModel.Latitude, Converter={x:StaticResource CoordinatesToStringConverter}}"/>
+
+                    <Label Grid.Column="0" Grid.Row="1" Margin="0" FontSize="Medium"
+                           Text="{Binding TravelNagiationViewModel.Longitude, Converter={x:StaticResource CoordinatesToStringConverter}}"/>
+
+                    <ImageButton Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Margin="0,0,10,0"
+                                 HorizontalOptions="End" VerticalOptions="Center" Source="copy_icon.svg"
+                                 Command="{Binding СoordinatesToClipboardCommand}">
+                        <ImageButton.Triggers>
+                            <Trigger TargetType="ImageButton" Property="IsPressed" Value="True">
+                                <Setter Property="IsVisible" Value="False"/>
+                            </Trigger>
+                        </ImageButton.Triggers>
+                    </ImageButton>
+
+                </Grid>
+            </Border>
+
+            <Grid HorizontalOptions="FillAndExpand" Margin="0,4,0,0">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Border Margin="0,0,2,0" Grid.Column="0" Grid.Row="0">
+                    <Button x:Name="Fry" ClassId="Fry" BackgroundColor="{StaticResource Fry}"
+                            Command="{Binding SetColorCommand}" CommandParameter="{x:Reference Fry}"/>
+                </Border>
+                
+                <Border Margin="2,0,2,0" Grid.Column="1" Grid.Row="0">
+                    <Button x:Name="Leela" ClassId="Leela" BackgroundColor="{StaticResource Leela}"
+                            Command="{Binding SetColorCommand}" CommandParameter="{x:Reference Leela}"/>
+                </Border>
+                <Border Margin="2,0,2,0" Grid.Column="2" Grid.Row="0">
+                    <Button x:Name="Amy" ClassId="Amy" BackgroundColor="{StaticResource Amy}"
+                            Command="{Binding SetColorCommand}" CommandParameter="{x:Reference Amy}"/>
+                </Border>
+                <Border Margin="2,0,2,0" Grid.Column="3" Grid.Row="0">
+                    <Button x:Name="Kif" ClassId="Kif" BackgroundColor="{StaticResource Kif}"
+                            Command="{Binding SetColorCommand}" CommandParameter="{x:Reference Kif}"/>
+                </Border>
+                <Border Margin="2,0,0,0" Grid.Column="4" Grid.Row="0">
+                    <Button x:Name="Bender" ClassId="Bender" BackgroundColor="{StaticResource Bender}"
+                            Command="{Binding SetColorCommand}" CommandParameter="{x:Reference Bender}"/>
+
+                </Border>
+            </Grid>
+
+            <!-- Delete PointOfInterest -->
+            <Grid Margin="0,100,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <!-- Confirm Delete Button-->
+                <Border x:Name="AcceptDeleteButton" Grid.Column="0" Grid.Row="0"
+                        BackgroundColor="{x:StaticResource PageBackgroundColor}" IsEnabled="False" IsVisible="False">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding Source={x:Reference DeleteButton}, Path=IsEnabled}" Value="False">
+                            <Setter Property="IsVisible" Value="True"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Border" Binding="{Binding Source={x:Reference DeleteButton}, Path=IsEnabled}" Value="True">
+                            <Setter Property="IsVisible" Value="False"/>
+                        </DataTrigger>
+                    </Border.Triggers>
+
+                    <ImageButton Margin="8" Source="accept_icon.svg" Command="{Binding DeleteCommand}"/>
+                </Border>
+                
+                <!-- Delete Button-->
+                <Border x:Name="DeleteButton" Grid.Column="1" Grid.Row="0"
+                        BackgroundColor="{x:StaticResource PageBackgroundColor}">
+                    <ImageButton Margin="8" Source="delete_icon.svg" 
+                                 Command="{Binding ShowConfirmDeleteMenuCommand}" CommandParameter="{x:Reference DeleteButton}"/>
+                
+                </Border>
+
+                <!-- Cancel Delete Button-->
+                <Border x:Name="CancelDeleteButton" Grid.Column="2" Grid.Row="0"
+                        BackgroundColor="{x:StaticResource PageBackgroundColor}" IsVisible="False">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding Source={x:Reference DeleteButton}, Path=IsEnabled}" Value="False">
+                            <Setter Property="IsVisible" Value="True"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Border" Binding="{Binding Source={x:Reference DeleteButton}, Path=IsEnabled}" Value="True">
+                            <Setter Property="IsVisible" Value="False"/>
+                        </DataTrigger>
+                    </Border.Triggers>
+
+                    <ImageButton Margin="8" Source="cancel_icon.svg" 
+                                 Command="{Binding CloseConfirmDeleteMenuCommand}" CommandParameter="{x:Reference DeleteButton}"/>
+                </Border>
+            </Grid>
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

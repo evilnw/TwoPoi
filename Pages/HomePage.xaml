@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TwoPoi.HomePage"
+             x:Name="HomePageContent">
+
+    <ScrollView VerticalOptions="FillAndExpand">
+        <StackLayout>
+
+            <!-- Creation button PointOfInterest -->
+            <Grid Margin="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Border Grid.Column="0" Grid.Row="0" BackgroundColor="{StaticResource Fry}">
+                    <ImageButton Margin="10" HorizontalOptions="FillAndExpand"
+                             BackgroundColor="{StaticResource Fry}" 
+                             Command="{Binding CreatePoiCommand}">
+                        <ImageButton.Triggers>
+                            <DataTrigger TargetType="ImageButton" Binding="{Binding PoiCreationStatus}" Value="Ready">
+                                <Setter Property="Source" Value="add_icon.svg"/>
+                                <Setter Property="Opacity" Value="100"/>
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="ImageButton" Binding="{Binding PoiCreationStatus}" Value="InProcess">
+                                <Setter Property="IsEnabled" Value="False"/>
+                                <Setter Property="Opacity" Value="0"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="ImageButton" Binding="{Binding PoiCreationStatus}" Value="Error">
+                                <Setter Property="Source" Value="location_off_icon"/>
+                                <Setter Property="Opacity" Value="100"/>
+                                <Setter Property="IsEnabled" Value="False"/>
+                            </DataTrigger>
+                        </ImageButton.Triggers>
+                    </ImageButton>
+                </Border>
+                
+                <ActivityIndicator Grid.Column="0" Grid.Row="0" HorizontalOptions="CenterAndExpand" IsRunning="False">
+                    <ActivityIndicator.Triggers>
+                        <DataTrigger TargetType="ActivityIndicator" Binding="{Binding PoiCreationStatus}" Value="Ready">
+                            <Setter Property="IsRunning" Value="False"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="ActivityIndicator" Binding="{Binding PoiCreationStatus}" Value="InProcess">
+                            <Setter Property="IsRunning" Value="True"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="ActivityIndicator" Binding="{Binding PoiCreationStatus}" Value="Error">
+                            <Setter Property="IsRunning" Value="False"/>
+                        </DataTrigger>
+                    </ActivityIndicator.Triggers>
+                </ActivityIndicator>
+            </Grid>
+
+            <!-- List of PointOfInterest -->
+            <CollectionView ItemsSource="{Binding TravelsViewModels}" SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+
+                        <Border Margin="4" BackgroundColor="{Binding Color}">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Path=BindingContext.OpenTravelDetailsPageCommand, Source={x:Reference HomePageContent}}"
+                                                      CommandParameter="{Binding .}"/>
+                            </Border.GestureRecognizers>
+
+                            <StackLayout Margin="10" BackgroundColor="{Binding Color}">
+                                <Label Text="{Binding Poi.Name}" HorizontalTextAlignment="Start" FontSize="Title" VerticalTextAlignment="Center"/>
+                                <Label Text="{Binding Distance}" HorizontalTextAlignment="Start" FontSize="Medium" VerticalTextAlignment="Center"/>
+                            </StackLayout>
+                        </Border>
+
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
